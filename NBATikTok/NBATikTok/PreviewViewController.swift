@@ -23,6 +23,7 @@ class PreviewViewController: UIViewController {
     // Declare variables
     @IBOutlet weak var uploadButton: UIButton!
     @IBOutlet weak var previewView: PreviewView!
+    @IBOutlet weak var statusLabel: UILabel!
     var playerLayer: AVPlayerLayer?
     public var videoURL: URL?
     private var videoProcessStatus: ProcessVideoStatus = .noVideo
@@ -32,6 +33,10 @@ class PreviewViewController: UIViewController {
         
         // Change button style
         uploadButton.layer.cornerRadius = 10
+        
+        // Change status label style
+        statusLabel.layer.cornerRadius = 30
+        statusLabel.isHidden = true
 
         // Do any additional setup after loading the view.
     }
@@ -74,6 +79,13 @@ class PreviewViewController: UIViewController {
     // Upload video to database
     @IBAction func uploadVideo(_ sender: UIButton) {
         self.videoProcessStatus = .uploading
+        
+//        self.statusLabel.isHidden = false
+//        self.statusLabel.text = "Uploading..."
+//        let spinnerView = SpinnerView()
+        let screenSize: CGRect = UIScreen.main.bounds
+        let spinnerView = SpinnerView(frame: CGRect(x: screenSize.width/2 - 50, y: screenSize.height/2 - 50, width: 100, height: 100))
+        self.view.addSubview(spinnerView)
     }
     
 
