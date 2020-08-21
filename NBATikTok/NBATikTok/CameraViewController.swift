@@ -86,6 +86,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         sessionQueue.async {
             switch self.setupResult {
@@ -428,6 +429,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     private var movieFileOutput: AVCaptureMovieFileOutput?
     
+    private var movieOutputFileURL: URL?
+    
+    private var movieOutputFileURLString: String = ""
+    
     private var backgroundRecordingID: UIBackgroundTaskIdentifier?
     
     @IBAction func toggleMovieRecording(_ recordButton: UIButton) {
@@ -509,10 +514,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             }
         }
         
-        // Perform segue
-        func animate() {
-        }
-        
         var success = true
         
         if error != nil {
@@ -528,22 +529,28 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                     // Set video status
                     self.videoStatus = .recorded
                     
-                    PHPhotoLibrary.shared().performChanges({
-                        let options = PHAssetResourceCreationOptions()
-                        options.shouldMoveFile = true
-                        let creationRequest = PHAssetCreationRequest.forAsset()
-                        creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
-                    }, completionHandler: { success, error in
-                        if !success {
-                            print("AVCam couldn't save the movie to your photo library: \(String(describing: error))")
-                        }
-                        DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: "previewRecordedVideo", sender: nil)
-                        }
-                        // clean when saved successfully
-                        cleanup()
+                    DispatchQueue.main.async {
+                        self.movieOutputFileURL = outputFileURL
+                        self.performSegue(withIdentifier: "previewRecordedVideo", sender: nil)
                     }
-                    )
+                    
+//                    PHPhotoLibrary.shared().performChanges({
+//                        let options = PHAssetResourceCreationOptions()
+//                        options.shouldMoveFile = true
+//                        let creationRequest = PHAssetCreationRequest.forAsset()
+//                        creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
+//                    }, completionHandler: { success, error in
+//                        if !success {
+//                            print("AVCam couldn't save the movie to your photo library: \(String(describing: error))")
+//                        }
+//                        DispatchQueue.main.async {
+//                            self.movieOutputFileURL = outputFileURL
+//                            self.performSegue(withIdentifier: "previewRecordedVideo", sender: nil)
+//                        }
+//                        // clean when saved successfully
+//                        cleanup()
+//                    }
+//                    )
                 } else {
                     cleanup()
                 }
@@ -789,7 +796,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     {
         let controller = segue.destination as? PreviewViewController
         
-        controller?.testSegueText = "testssssss"
+        controller?.videoURL = self.movieOutputFileURL!
     }
 
     /*
