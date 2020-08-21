@@ -22,16 +22,17 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Adjust record btoon's image size
-        cameraButton.imageView?.contentMode = .scaleAspectFit
-        cameraButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        recordButton.imageView?.contentMode = .scaleAspectFit
-        recordButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//
+//        // Adjust record btoon's image size
+//        cameraButton.imageView?.contentMode = .scaleAspectFit
+//        cameraButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        recordButton.imageView?.contentMode = .scaleAspectFit
+//        recordButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         // Disable the UI. Enable the UI later, if and only if the session starts running.
         cameraButton.isEnabled = false
         recordButton.isEnabled = false
+        timeLabel.isHidden = true
         
         // Set up the video preview view.
         previewView.session = session
@@ -414,6 +415,17 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     // MARK: Recording Movies
     
+    private enum ProcessVideoStatus {
+        case noVideo
+        case recorded
+        case updating
+        case updated
+        case processing
+        case processed
+    }
+    
+    private var videoStatus: ProcessVideoStatus = .noVideo
+    
     private var movieFileOutput: AVCaptureMovieFileOutput?
     
     private var backgroundRecordingID: UIBackgroundTaskIdentifier?
@@ -464,8 +476,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         // Enable the Record button to let the user stop recording.
         DispatchQueue.main.async {
+            // timer function
+            self.timeLabel.isHidden = false
+            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.UpdateTimer), userInfo: nil, repeats: true)
             self.recordButton.isEnabled = true
-            self.recordButton.setImage(UIImage(systemName: "circle.fill"), for: [])
+            self.recordButton.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: [])
         }
     }
     
@@ -494,6 +509,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             }
         }
         
+        // Perform segue
+        func animate() {
+        }
+        
         var success = true
         
         if error != nil {
@@ -506,6 +525,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             PHPhotoLibrary.requestAuthorization { status in
                 if status == .authorized {
                     // Save the movie file to the photo library and cleanup.
+                    // Set video status
+                    self.videoStatus = .recorded
+                    
                     PHPhotoLibrary.shared().performChanges({
                         let options = PHAssetResourceCreationOptions()
                         options.shouldMoveFile = true
@@ -515,6 +537,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                         if !success {
                             print("AVCam couldn't save the movie to your photo library: \(String(describing: error))")
                         }
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "previewRecordedVideo", sender: nil)
+                        }
+                        // clean when saved successfully
                         cleanup()
                     }
                     )
@@ -528,10 +554,59 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         // Enable the Camera and Record buttons to let the user switch camera and start another recording.
         DispatchQueue.main.async {
+            // reset timer
+            self.timer.invalidate()
+            self.counter = 0
+            self.timeLabel.text = String(self.counter) + " sec"
+            self.timeLabel.isHidden = true
             // Only enable the ability to change camera if the device has more than one camera.
             self.cameraButton.isEnabled = self.videoDeviceDiscoverySession.uniqueDevicePositionsCount > 1
             self.recordButton.isEnabled = true
-            self.recordButton.setImage(UIImage(systemName: "smallcircle.fill.circle"), for: [])
+            self.recordButton.setBackgroundImage(UIImage(systemName: "circle.fill"), for: [])
+        }
+    }
+    
+    // MARK: Timer
+    
+    // Time variables
+    var counter = 0
+    var timer = Timer()
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    @objc func UpdateTimer() {
+        counter = counter + 1
+        timeLabel.text = String(counter) + " sec"
+        
+        // Allow record button to stop when timer reaches 10 seconds
+        if(counter >= 10 && !self.recordButton.isEnabled)
+        {
+            DispatchQueue.main.async {
+                // reset timer
+                self.recordButton.isEnabled = true
+            }
+        }
+        
+        // Stop record when timer reaches 30 seconds
+        if(counter == 30)
+        {
+            guard let movieFileOutput = self.movieFileOutput else {
+                return
+            }
+            
+            /*
+             Disable the Camera button until recording finishes, and disable
+             the Record button until recording starts or finishes.
+             
+             See the AVCaptureFileOutputRecordingDelegate methods.
+             */
+            cameraButton.isEnabled = false
+            recordButton.isEnabled = false
+            
+            sessionQueue.async {
+                if movieFileOutput.isRecording {
+                    movieFileOutput.stopRecording()
+                }
+            }
         }
     }
     
@@ -707,6 +782,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             }
             )
         }
+    }
+    
+    // MARK: Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let controller = segue.destination as? PreviewViewController
+        
+        controller?.testSegueText = "testssssss"
     }
 
     /*

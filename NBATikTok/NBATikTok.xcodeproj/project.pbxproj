@@ -16,6 +16,7 @@
 		B928210F24ED1B110057CCA5 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B928210E24ED1B110057CCA5 /* PreviewView.swift */; };
 		B928211124ED22D70057CCA5 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B928211024ED22D70057CCA5 /* CameraViewController.swift */; };
 		B928211424ED75D20057CCA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B928211224ED75D20057CCA5 /* LaunchScreen.storyboard */; };
+		B993906D24EEB5AA0095A9C3 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B993906C24EEB5AA0095A9C3 /* PreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		B928210E24ED1B110057CCA5 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		B928211024ED22D70057CCA5 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		B928211324ED75D20057CCA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B993906C24EEB5AA0095A9C3 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				B92820EC24ED17D00057CCA5 /* Info.plist */,
 				B928210E24ED1B110057CCA5 /* PreviewView.swift */,
 				B928211024ED22D70057CCA5 /* CameraViewController.swift */,
+				B993906C24EEB5AA0095A9C3 /* PreviewViewController.swift */,
 			);
 			path = NBATikTok;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				B928211124ED22D70057CCA5 /* CameraViewController.swift in Sources */,
 				B928210F24ED1B110057CCA5 /* PreviewView.swift in Sources */,
 				B92820DF24ED17CA0057CCA5 /* AppDelegate.swift in Sources */,
+				B993906D24EEB5AA0095A9C3 /* PreviewViewController.swift in Sources */,
 				B92820E124ED17CA0057CCA5 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
