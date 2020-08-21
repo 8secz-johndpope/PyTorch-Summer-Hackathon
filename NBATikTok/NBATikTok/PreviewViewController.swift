@@ -10,11 +10,22 @@ import UIKit
 import AVFoundation
 
 class PreviewViewController: UIViewController {
+    // Status
+    private enum ProcessVideoStatus {
+        case noVideo
+        case recorded
+        case uploading
+        case uploaded
+        case processing
+        case processed
+    }
+    
     // Declare variables
     @IBOutlet weak var uploadButton: UIButton!
     @IBOutlet weak var previewView: PreviewView!
     var playerLayer: AVPlayerLayer?
     public var videoURL: URL?
+    private var videoProcessStatus: ProcessVideoStatus = .noVideo
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +41,7 @@ class PreviewViewController: UIViewController {
         
         // Play preview video and loop
         DispatchQueue.main.async {
+            self.videoProcessStatus = .recorded
             let player = AVPlayer(url: self.videoURL!)
             
             NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { (_) in
@@ -57,6 +69,11 @@ class PreviewViewController: UIViewController {
                 print("Could not remove file at url: \(outputFileURL)")
             }
         }
+    }
+    
+    // Upload video to database
+    @IBAction func uploadVideo(_ sender: UIButton) {
+        self.videoProcessStatus = .uploading
     }
     
 

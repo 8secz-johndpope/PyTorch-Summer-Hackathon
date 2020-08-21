@@ -416,17 +416,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     // MARK: Recording Movies
     
-    private enum ProcessVideoStatus {
-        case noVideo
-        case recorded
-        case updating
-        case updated
-        case processing
-        case processed
-    }
-    
-    private var videoStatus: ProcessVideoStatus = .noVideo
-    
     private var movieFileOutput: AVCaptureMovieFileOutput?
     
     private var movieOutputFileURL: URL?
@@ -527,7 +516,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 if status == .authorized {
                     // Save the movie file to the photo library and cleanup.
                     // Set video status
-                    self.videoStatus = .recorded
                     
                     DispatchQueue.main.async {
                         self.movieOutputFileURL = outputFileURL

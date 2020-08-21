@@ -122,7 +122,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                 </state>
                                 <connections>
-                                    <action selector="changeCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QEZ-Eh-sDX"/>
+                                    <action selector="uploadVideo:" destination="gh1-WF-ARs" eventType="touchUpInside" id="zCT-gq-Rnz"/>
                                 </connections>
                             </button>
                             <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bwA-96-nEP" customClass="PreviewView" customModule="NBATikTok" customModuleProvider="target">
