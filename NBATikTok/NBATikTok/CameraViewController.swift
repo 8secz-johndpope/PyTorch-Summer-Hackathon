@@ -458,7 +458,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 
                 // Start recording video to a temporary file.
                 let outputFileName = NSUUID().uuidString
-                let outputFilePath = (NSTemporaryDirectory() as NSString).appendingPathComponent((outputFileName as NSString).appendingPathExtension("mov")!)
+                let outputFilePath = (NSTemporaryDirectory() as NSString).appendingPathComponent((outputFileName as NSString).appendingPathExtension("mp4")!)
                 movieFileOutput.startRecording(to: URL(fileURLWithPath: outputFilePath), recordingDelegate: self)
             } else {
                 movieFileOutput.stopRecording()
