@@ -199,6 +199,21 @@ class PreviewViewController: UIViewController {
 
                                                                                                                         // Do something with the response data
                                                                                                                         self.editedVideoURL = responceURL
+                                                                                                                        
+                                                                                                                        // Play preview video and loop
+                                                                                                                        DispatchQueue.main.async {
+                                                                                                                            let player = AVPlayer(url: self.editedVideoURL!)
+                                                                                                                            
+                                                                                                                            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { (_) in
+                                                                                                                                        player.seek(to: CMTime.zero)
+                                                                                                                                        player.play()
+                                                                                                                            }
+                                                                                                                            
+                                                                                                                            self.playerLayer = AVPlayerLayer(player: player)
+                                                                                                                            self.playerLayer!.frame = self.previewView.bounds
+                                                                                                                            self.previewView!.layer.addSublayer(self.playerLayer!)
+                                                                                                                            player.play()
+                                                                                                                        }
 
                                                                                                                         // Do something with the error
                                                                                                                         if let error = error {
@@ -245,15 +260,13 @@ class PreviewViewController: UIViewController {
     @IBAction func DownloadVideo(_ sender: Any) {
         PHPhotoLibrary.shared().performChanges({
             let options = PHAssetResourceCreationOptions()
-            options.shouldMoveFile = true
+            options.shouldMoveFile = false
             let creationRequest = PHAssetCreationRequest.forAsset()
             creationRequest.addResource(with: .video, fileURL: self.editedVideoURL!, options: options)
         }, completionHandler: { success, error in
             if !success {
                 print("AVCam couldn't save the movie to your photo library: \(String(describing: error))")
             }
-            // clean when saved successfully
-            self.cleanup(outputFileURL: self.editedVideoURL!)
         }
         )
         
