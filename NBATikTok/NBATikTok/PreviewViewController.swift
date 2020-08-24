@@ -103,47 +103,134 @@ class PreviewViewController: UIViewController {
         self.downloadButton.isHidden = false
         
         // Upload Session
+//        DispatchQueue.main.async {
+//            var request = URLRequest(url: NSURL(string: "https://0f77e8d0c5ef.ngrok.io/videos/user/original")! as URL)
+//            request.httpMethod = "POST"
+//            let boundary = "Boundary+\(arc4random())\(arc4random())"
+//            var body = Data()
+//
+//            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+//
+//            // User ID
+//            let key1 = "userId"
+//            let value1 = "Testsssss"
+//            let key2 = "video"
+//
+//            body.appendString(string: "--\(boundary)\r\n")
+//            body.appendString(string: "Content-Disposition: form-data; name=\"\(key1)\"\r\n\r\n")
+//            body.appendString(string: "\(value1)\r\n")
+//
+//            var movieData: Data?
+//            do {
+//                movieData = try Data(contentsOf: self.videoURL!, options: Data.ReadingOptions.alwaysMapped)
+//            } catch _ {
+//                movieData = nil
+//                return
+//            }
+//
+//            body.appendString(string: "--\(boundary)\r\n")
+//            body.appendString(string: "Content-Disposition: form-data; name=\"\(key2)\"; filename=\"\(NSUUID().uuidString+".mp4")\"\r\n")
+//            body.appendString(string: "Content-Type: video/mp4\r\n\r\n")
+//            body.append(movieData!)
+//            body.appendString(string: "\r\n")
+//
+//            body.appendString(string: "--\(boundary)--\r\n")
+//            request.httpBody = body
+//
+//            let uploadTask = self.session.dataTask(with: request,
+//                                                           completionHandler: { (responseData, response, error) in
+//
+//                                                            // Check on some response headers (if it's HTTP)
+//                                                            if let httpResponse = response as? HTTPURLResponse {
+//                                                                switch httpResponse.statusCode {
+//                                                                case 200..<300:
+//                                                                    print("Success")
+//                                                                case 400..<500:
+//                                                                    print("Request error")
+//                                                                case 500..<600:
+//                                                                    print("Server error")
+//                                                                case let otherCode:
+//                                                                    print("Other code: \(otherCode)")
+//                                                                }
+//                                                            }
+//
+//                                                            // Do something with the response data
+//                                                            if let
+//                                                                responseData = responseData,
+//                                                                let responseString = String(data: responseData, encoding: String.Encoding.utf8) {
+//                                                                print("Server Response:")
+//                                                                print(responseString)
+//                                                            }
+//
+//                                                            // Do something with the error
+//                                                            if let error = error {
+//                                                                print(error.localizedDescription)
+//                                                            }
+//            })
+//
+//            uploadTask.resume()
+//        }
+        
         DispatchQueue.main.async {
-            let request = NSURLRequest(url: NSURL(string: "http://example.com")! as URL)
+        let downloadRequest = URLRequest(url: NSURL(string: "https://0f77e8d0c5ef.ngrok.io/videos/user/original/test.mp4")! as URL)
+        let downloadTask = self.session.downloadTask(with: downloadRequest as URLRequest,
+                                                       completionHandler: { (responceURL, response, error) in
 
-            let uploadTask = self.session.uploadTask(with: request as URLRequest, fromFile: self.videoURL!,
-                                                           completionHandler: { (responseData, response, error) in
+                                                        // Check on some response headers (if it's HTTP)
+                                                        if let httpResponse = response as? HTTPURLResponse {
+                                                            switch httpResponse.statusCode {
+                                                            case 200..<300:
+                                                                print("Success")
+                                                            case 400..<500:
+                                                                print("Request error")
+                                                            case 500..<600:
+                                                                print("Server error")
+                                                            case let otherCode:
+                                                                print("Other code: \(otherCode)")
+                                                            }
+                                                        }
 
-                                                            // Check on some response headers (if it's HTTP)
-                                                            if let httpResponse = response as? HTTPURLResponse {
-                                                                switch httpResponse.statusCode {
-                                                                case 200..<300:
-                                                                    print("Success")
-                                                                case 400..<500:
-                                                                    print("Request error")
-                                                                case 500..<600:
-                                                                    print("Server error")
-                                                                case let otherCode:
-                                                                    print("Other code: \(otherCode)")
+                                                        // Do something with the response data
+                                                        self.editedVideoURL = responceURL
+
+                                                        DispatchQueue.main.async {
+                                                            for layer in self.previewView!.layer.sublayers! {
+                                                                if(layer is AVPlayerLayer)
+                                                                {
+                                                                    layer.removeFromSuperlayer()
                                                                 }
                                                             }
+                                                        }
 
-                                                            // Do something with the response data
-                                                            if let
-                                                                responseData = responseData,
-                                                                let responseString = String(data: responseData, encoding: String.Encoding.utf8) {
-                                                                print("Server Response:")
-                                                                print(responseString)
+                                                        // Play preview video and loop
+                                                        DispatchQueue.main.async {
+                                                            print(self.editedVideoURL!)
+                                                            let player = AVPlayer(url: self.editedVideoURL!)
+
+                                                            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { (_) in
+                                                                        player.seek(to: CMTime.zero)
+                                                                        player.play()
                                                             }
 
-                                                            // Do something with the error
-                                                            if let error = error {
-                                                                print(error.localizedDescription)
-                                                            }
-            })
+                                                            self.playerLayer = AVPlayerLayer(player: player)
+                                                            self.playerLayer!.frame = self.previewView.bounds
+                                                            self.previewView!.layer.addSublayer(self.playerLayer!)
+                                                            player.play()
+                                                        }
 
-            uploadTask.resume()
+                                                        // Do something with the error
+                                                        if let error = error {
+                                                            print(error.localizedDescription)
+                                                        }
+        })
+
+        downloadTask.resume()
         }
 
         // Get video edit status
-        DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.GetEditStatus), userInfo: nil, repeats: true)
-        }
+//        DispatchQueue.main.async {
+//            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.GetEditStatus), userInfo: nil, repeats: true)
+//        }
         
     }
     
@@ -283,4 +370,12 @@ class PreviewViewController: UIViewController {
     }
     */
 
+}
+
+extension Data{
+    
+    mutating func appendString(string: String) {
+        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
+        append(data!)
+    }
 }
