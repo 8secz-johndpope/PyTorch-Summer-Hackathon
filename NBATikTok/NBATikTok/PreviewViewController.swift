@@ -103,8 +103,6 @@ class PreviewViewController: UIViewController {
         self.statusLabel.text = "Uploading"
         self.statusLabel.frame = CGRect(x: screenSize.width/2 - 50, y: screenSize.height/2 - 50, width: 100, height: 100)
         
-        self.downloadButton.isHidden = false
-        
         // Upload Session
         DispatchQueue.main.async {
             var request = URLRequest(url: NSURL(string: self.databaseURL + "user/original")! as URL)
