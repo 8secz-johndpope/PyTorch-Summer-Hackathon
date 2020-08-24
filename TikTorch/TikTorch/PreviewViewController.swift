@@ -42,6 +42,7 @@ class PreviewViewController: UIViewController {
         uploadButton.isHidden = false
         statusLabel.isHidden = true
         downloadButton.isHidden = true
+        downloadButton.isEnabled = false
 
         // Do any additional setup after loading the view.
     }
@@ -99,7 +100,9 @@ class PreviewViewController: UIViewController {
         self.spinnerView = SpinnerView(frame: CGRect(x: screenSize.width/2 - 50, y: screenSize.height/2 - 50, width: 100, height: 100))
         self.view.addSubview(self.spinnerView!)
         self.uploadButton.isHidden = true
+        self.uploadButton.isEnabled = true
         self.statusLabel.isHidden = false
+        self.statusLabel.isEnabled = false
         self.statusLabel.text = "Uploading"
         self.statusLabel.frame = CGRect(x: screenSize.width/2 - 50, y: screenSize.height/2 - 50, width: 100, height: 100)
         
@@ -177,19 +180,6 @@ class PreviewViewController: UIViewController {
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.GetEditStatus), userInfo: nil, repeats: true)
         }
         
-//        DispatchQueue.main.async {
-//            let player = AVPlayer(url: URL(string: "https://7245b8eb0baa.ngrok.io/videos/user/original/7A22F90F-6E64-4C13-9982-E0ED3D10B336.mp4")!)
-//
-//            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { (_) in
-//                        player.seek(to: CMTime.zero)
-//                        player.play()
-//            }
-//
-//            self.playerLayer = AVPlayerLayer(player: player)
-//            self.playerLayer!.frame = self.previewView.bounds
-//            self.previewView!.layer.addSublayer(self.playerLayer!)
-//            player.play()
-//        }
     }
     
     var timer = Timer()
@@ -230,7 +220,9 @@ class PreviewViewController: UIViewController {
                                                                     DispatchQueue.main.async {
                                                                         self.videoProcessStatus = .processed
                                                                         self.statusLabel.isHidden = true
+                                                                        self.statusLabel.isEnabled = true
                                                                         self.downloadButton.isHidden = false
+                                                                        self.downloadButton.isEnabled = true
                                                                     }
 
 
@@ -334,7 +326,7 @@ class PreviewViewController: UIViewController {
 //            }
 //        }
 //        )
-        
+        print("Download")
         DispatchQueue.global(qos: .background).async {
             if let url = URL(string: self.databaseURL + "user/result/" + self.videoName),
                 let urlData = NSData(contentsOf: url) {
@@ -347,6 +339,10 @@ class PreviewViewController: UIViewController {
                     }) { completed, error in
                         if completed {
                             print("Video is saved!")
+                        }
+                        
+                        if (error != nil) {
+                            print(error.debugDescription)
                         }
                     }
                 }
