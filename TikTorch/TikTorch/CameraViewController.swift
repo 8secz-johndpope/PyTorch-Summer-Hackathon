@@ -476,6 +476,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
+    var circularView: CircularProgressView!
+    var duration: TimeInterval!
+    
     /// - Tag: DidStartRecording
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         // Enable the Record button to let the user stop recording.
@@ -484,7 +487,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             self.timeLabel.isHidden = false
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.UpdateTimer), userInfo: nil, repeats: true)
             self.recordButton.isEnabled = false
-            self.recordButton.setBackgroundImage(UIImage(named: "circle-dot"), for: [])
+            self.recordButton.setBackgroundImage(UIImage(named: "circle-stop"), for: [])
+            
+            // Add circular view
+            self.circularView = CircularProgressView(frame: self.recordButton.frame)
+            self.circularView.center = self.recordButton.center
+            self.view.addSubview(self.circularView)
+            self.duration = 10    //Play with whatever value you want :]
+            self.circularView.progressAnimation(duration: self.duration)
         }
     }
     
@@ -588,6 +598,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             DispatchQueue.main.async {
                 // reset timer
                 self.recordButton.isEnabled = true
+                
+                // Destroy circular view
+                for view in self.view.subviews {
+                    if(view is CircularProgressView)
+                    {
+                        view.removeFromSuperview()
+                    }
+                }
+                
             }
         }
         

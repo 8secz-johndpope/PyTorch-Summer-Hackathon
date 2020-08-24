@@ -33,6 +33,11 @@
 	<string>NBATikTok uses the microphone to record sound during Live Photos and movies.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NBATikTok saves captured photos and videos to your photo library.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Taylor-Swift-Handwriting.ttf</string>
+		<string>crayon_1-1.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

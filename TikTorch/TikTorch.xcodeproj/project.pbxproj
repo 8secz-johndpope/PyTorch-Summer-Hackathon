@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B93E997C24F438EA00F783C3 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E997B24F438EA00F783C3 /* CircularProgressView.swift */; };
+		B93E998024F4495000F783C3 /* Taylor-Swift-Handwriting.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B93E997F24F4495000F783C3 /* Taylor-Swift-Handwriting.ttf */; };
+		B93E998324F44F2100F783C3 /* crayon_1-1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B93E998224F44F2100F783C3 /* crayon_1-1.ttf */; };
 		B9B6BED724F40BE900ED7926 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B6BED624F40BE900ED7926 /* AppDelegate.swift */; };
 		B9B6BED924F40BE900ED7926 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B6BED824F40BE900ED7926 /* SceneDelegate.swift */; };
 		B9B6BEDE24F40BE900ED7926 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9B6BEDC24F40BE900ED7926 /* Main.storyboard */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B93E997B24F438EA00F783C3 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
+		B93E997F24F4495000F783C3 /* Taylor-Swift-Handwriting.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Taylor-Swift-Handwriting.ttf"; sourceTree = "<group>"; };
+		B93E998224F44F2100F783C3 /* crayon_1-1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "crayon_1-1.ttf"; sourceTree = "<group>"; };
 		B9B6BED324F40BE900ED7926 /* TikTorch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TikTorch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9B6BED624F40BE900ED7926 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9B6BED824F40BE900ED7926 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +49,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B93E998124F44F0A00F783C3 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B93E998224F44F2100F783C3 /* crayon_1-1.ttf */,
+				B93E997F24F4495000F783C3 /* Taylor-Swift-Handwriting.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		B9B6BECA24F40BE900ED7926 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +77,7 @@
 		B9B6BED524F40BE900ED7926 /* TikTorch */ = {
 			isa = PBXGroup;
 			children = (
+				B93E998124F44F0A00F783C3 /* Fonts */,
 				B9B6BEEC24F40C5000ED7926 /* CameraViewController.swift */,
 				B9B6BEED24F40C5000ED7926 /* PreviewView.swift */,
 				B9B6BEEA24F40C5000ED7926 /* PreviewViewController.swift */,
@@ -72,6 +88,7 @@
 				B9B6BEDF24F40BEB00ED7926 /* Assets.xcassets */,
 				B9B6BEE124F40BEB00ED7926 /* LaunchScreen.storyboard */,
 				B9B6BEE424F40BEB00ED7926 /* Info.plist */,
+				B93E997B24F438EA00F783C3 /* CircularProgressView.swift */,
 			);
 			path = TikTorch;
 			sourceTree = "<group>";
@@ -134,7 +151,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B93E998324F44F2100F783C3 /* crayon_1-1.ttf in Resources */,
 				B9B6BEE324F40BEB00ED7926 /* LaunchScreen.storyboard in Resources */,
+				B93E998024F4495000F783C3 /* Taylor-Swift-Handwriting.ttf in Resources */,
 				B9B6BEE024F40BEB00ED7926 /* Assets.xcassets in Resources */,
 				B9B6BEDE24F40BE900ED7926 /* Main.storyboard in Resources */,
 			);
@@ -150,6 +169,7 @@
 				B9B6BEF024F40C5000ED7926 /* SpinnerView.swift in Sources */,
 				B9B6BEF224F40C5000ED7926 /* PreviewView.swift in Sources */,
 				B9B6BED724F40BE900ED7926 /* AppDelegate.swift in Sources */,
+				B93E997C24F438EA00F783C3 /* CircularProgressView.swift in Sources */,
 				B9B6BED924F40BE900ED7926 /* SceneDelegate.swift in Sources */,
 				B9B6BEEF24F40C5000ED7926 /* PreviewViewController.swift in Sources */,
 				B9B6BEF124F40C5000ED7926 /* CameraViewController.swift in Sources */,

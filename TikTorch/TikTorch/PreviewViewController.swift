@@ -117,7 +117,7 @@ class PreviewViewController: UIViewController {
     
     // Upload video to database
     private let videoName = NSUUID().uuidString + ".mp4"
-    private let databaseURL = "https://7245b8eb0baa.ngrok.io/videos/"
+    private let databaseURL = "https://6448b5fb844b.ngrok.io/videos/"
     
     @IBAction func uploadVideo(_ sender: UIButton) {
         self.videoProcessStatus = .uploading
@@ -357,7 +357,7 @@ class PreviewViewController: UIViewController {
             if let url = URL(string: self.databaseURL + "user/result/" + self.videoName),
                 let urlData = NSData(contentsOf: url) {
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
-                let filePath="\(documentsPath)/\(self.videoName).mp4"
+                let filePath="\(documentsPath)/\(self.videoName)"
                 DispatchQueue.main.async {
                     urlData.write(toFile: filePath, atomically: true)
                     PHPhotoLibrary.shared().performChanges({
