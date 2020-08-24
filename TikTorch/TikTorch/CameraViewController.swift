@@ -39,7 +39,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         /*
         Check the video authorization status. Video access is required and audio
-        access is optional. If the user denies audio access, AVCam won't
+        access is optional. If the user denies audio access, TikTorch won't
         record audio during movie recording.
         */
         switch AVCaptureDevice.authorizationStatus(for: .video) {
@@ -101,9 +101,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 
             case .notAuthorized:
                 DispatchQueue.main.async {
-                    let changePrivacySetting = "AVCam doesn't have permission to use the camera, please change privacy settings"
+                    let changePrivacySetting = "TikTorch doesn't have permission to use the camera, please change privacy settings"
                     let message = NSLocalizedString(changePrivacySetting, comment: "Alert message when the user has denied access to the camera")
-                    let alertController = UIAlertController(title: "AVCam", message: message, preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "TikTorch", message: message, preferredStyle: .alert)
                     
                     alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"),
                                                             style: .cancel,
@@ -124,7 +124,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 DispatchQueue.main.async {
                     let alertMsg = "Alert message when something goes wrong during capture session configuration"
                     let message = NSLocalizedString("Unable to capture media", comment: alertMsg)
-                    let alertController = UIAlertController(title: "AVCam", message: message, preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "TikTorch", message: message, preferredStyle: .alert)
                     
                     alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"),
                                                             style: .cancel,
@@ -291,7 +291,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             if !self.session.isRunning {
                 DispatchQueue.main.async {
                     let message = NSLocalizedString("Unable to resume", comment: "Alert message when unable to resume the session running")
-                    let alertController = UIAlertController(title: "AVCam", message: message, preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "TikTorch", message: message, preferredStyle: .alert)
                     let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: .cancel, handler: nil)
                     alertController.addAction(cancelAction)
                     self.present(alertController, animated: true, completion: nil)
@@ -539,7 +539,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 //                        creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
 //                    }, completionHandler: { success, error in
 //                        if !success {
-//                            print("AVCam couldn't save the movie to your photo library: \(String(describing: error))")
+//                            print("TikTorch couldn't save the movie to your photo library: \(String(describing: error))")
 //                        }
 //                        DispatchQueue.main.async {
 //                            self.movieOutputFileURL = outputFileURL
@@ -732,7 +732,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         /*
          In some scenarios you want to enable the user to resume the session.
          For example, if music playback is initiated from Control Center while
-         using AVCam, then the user can let AVCam resume
+         using TikTorch, then the user can let TikTorch resume
          the session running, which will stop music playback. Note that stopping
          music playback in Control Center will not automatically resume the session.
          Also note that it's not always possible to resume, see `resumeInterruptedSession(_:)`.

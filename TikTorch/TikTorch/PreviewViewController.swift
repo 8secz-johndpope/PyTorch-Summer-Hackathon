@@ -348,7 +348,7 @@ class PreviewViewController: UIViewController {
 //            creationRequest.addResource(with: .video, fileURL: self.editedVideoURL!, options: options)
 //        }, completionHandler: { success, error in
 //            if !success {
-//                print("AVCam couldn't save the movie to your photo library: \(String(describing: error))")
+//                print("TikTorch couldn't save the movie to your photo library: \(String(describing: error))")
 //            }
 //        }
 //        )
