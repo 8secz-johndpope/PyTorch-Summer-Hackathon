@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:NBATikTok.xcodeproj">
+      location = "self:TikTorch.xcodeproj">
    </FileRef>
 </Workspace>

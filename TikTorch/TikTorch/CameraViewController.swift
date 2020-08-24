@@ -473,7 +473,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             // timer function
             self.timeLabel.isHidden = false
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.UpdateTimer), userInfo: nil, repeats: true)
-            self.recordButton.isEnabled = true
+            self.recordButton.isEnabled = false
             self.recordButton.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: [])
         }
     }

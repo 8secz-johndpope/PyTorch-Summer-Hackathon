@@ -36,8 +36,8 @@ class PreviewViewController: UIViewController {
         super.viewDidLoad()
         
         // Change button style
-        uploadButton.layer.cornerRadius = 10
-        downloadButton.layer.cornerRadius = 10
+        uploadButton.layer.cornerRadius = 14
+        downloadButton.layer.cornerRadius = 14
         
         uploadButton.isHidden = false
         statusLabel.isHidden = true
