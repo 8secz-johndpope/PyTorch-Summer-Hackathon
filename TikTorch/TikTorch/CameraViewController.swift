@@ -16,9 +16,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var resumeButton: UIButton!
     
-    var windowOrientation: UIInterfaceOrientation {
-        return view.window?.windowScene?.interfaceOrientation ?? .unknown
-    }
+//    var windowOrientation: UIInterfaceOrientation {
+//        return view.window?.windowScene?.interfaceOrientation ?? .unknown
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +88,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
+        // Set orientation
+        AppUtility.lockOrientation(.portrait)
+        
         sessionQueue.async {
             switch self.setupResult {
             case .success:
@@ -133,6 +136,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        // Set orientation
+        AppUtility.lockOrientation(.all)
+
+    }
+    
     // MARK: Session Management
     
     private enum SessionSetupResult {
@@ -154,7 +164,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet private weak var previewView: PreviewView!
     
     //
-    private var photoQualityPrioritizationMode: AVCapturePhotoOutput.QualityPrioritization = .speed
+//    private var photoQualityPrioritizationMode: AVCapturePhotoOutput.QualityPrioritization = .speed
     
     // Call this on the session queue.
     /// - Tag: ConfigureSession
@@ -208,11 +218,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                      handled by CameraViewController.viewWillTransition(to:with:).
                      */
                     var initialVideoOrientation: AVCaptureVideoOrientation = .portrait
-                    if self.windowOrientation != .unknown {
-                        if let videoOrientation = AVCaptureVideoOrientation(interfaceOrientation: self.windowOrientation) {
-                            initialVideoOrientation = videoOrientation
-                        }
-                    }
+//                    if self.windowOrientation != .unknown {
+//                        if let videoOrientation = AVCaptureVideoOrientation(interfaceOrientation: self.windowOrientation) {
+//                            initialVideoOrientation = videoOrientation
+//                        }
+//                    }
                     
                     self.previewView.videoPreviewLayer.connection?.videoOrientation = initialVideoOrientation
                 }
@@ -474,7 +484,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             self.timeLabel.isHidden = false
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.UpdateTimer), userInfo: nil, repeats: true)
             self.recordButton.isEnabled = false
-            self.recordButton.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: [])
+            self.recordButton.setBackgroundImage(UIImage(named: "circle-dot"), for: [])
         }
     }
     
@@ -557,7 +567,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             // Only enable the ability to change camera if the device has more than one camera.
             self.cameraButton.isEnabled = self.videoDeviceDiscoverySession.uniqueDevicePositionsCount > 1
             self.recordButton.isEnabled = true
-            self.recordButton.setBackgroundImage(UIImage(systemName: "circle.fill"), for: [])
+            self.recordButton.setBackgroundImage(UIImage(named: "circle-filled"), for: [])
         }
     }
     
@@ -796,7 +806,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Pass the selected object to the new view controller.
     }
     */
-
 }
 
 extension AVCaptureVideoOrientation {

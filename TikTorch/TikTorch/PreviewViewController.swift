@@ -10,6 +10,26 @@ import UIKit
 import AVFoundation
 import Photos
 
+struct AppUtility {
+
+    static func lockOrientation(_ orientation: UIInterfaceOrientationMask) {
+    
+        if let delegate = UIApplication.shared.delegate as? AppDelegate {
+            delegate.orientationLock = orientation
+        }
+    }
+
+    /// OPTIONAL Added method to adjust lock and rotate to the desired orientation
+    static func lockOrientation(_ orientation: UIInterfaceOrientationMask, andRotateTo rotateOrientation:UIInterfaceOrientation) {
+   
+        self.lockOrientation(orientation)
+    
+        UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+        UINavigationController.attemptRotationToDeviceOrientation()
+    }
+
+}
+
 class PreviewViewController: UIViewController {
     // Status
     private enum ProcessVideoStatus {
@@ -50,6 +70,9 @@ class PreviewViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        // Set orientation
+        AppUtility.lockOrientation(.portrait)
+        
         // Play preview video and loop
         DispatchQueue.main.async {
             self.videoProcessStatus = .recorded
@@ -73,6 +96,9 @@ class PreviewViewController: UIViewController {
         {
             cleanup(outputFileURL: self.editedVideoURL!)
         }
+        
+        // Set orientation
+        AppUtility.lockOrientation(.all)
     }
     
     func cleanup(outputFileURL: URL) {
