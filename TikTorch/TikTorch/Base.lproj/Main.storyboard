@@ -35,8 +35,8 @@
                                 </connections>
                             </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0P-YB-NJH" userLabel="Resume">
-                                <rect key="frame" x="124" y="428" width="165" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="125" y="422" width="165" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                                 <state key="normal" title="Tap to resume">
@@ -52,8 +52,8 @@
                                 </connections>
                             </button>
                             <label hidden="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Camera Unavailable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dzc-FJ-zy1" userLabel="Camera Unavailable">
-                                <rect key="frame" x="103" y="433" width="208" height="28.666666666666657"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="102" y="429" width="208" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -176,6 +176,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="downloadButton" destination="cwK-2M-fIr" id="BF8-EP-NgP"/>
+                        <outlet property="hintLabel" destination="yWe-qe-5Is" id="0l5-6Y-eCP"/>
                         <outlet property="previewView" destination="bwA-96-nEP" id="rSN-Zn-nq9"/>
                         <outlet property="statusLabel" destination="ynv-LC-a6N" id="8JY-ta-DQN"/>
                         <outlet property="uploadButton" destination="DNt-7e-SY5" id="ahF-GW-KXs"/>

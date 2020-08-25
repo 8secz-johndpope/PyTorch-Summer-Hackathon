@@ -46,6 +46,7 @@ class PreviewViewController: UIViewController {
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var hintLabel: UILabel!
     var playerLayer: AVPlayerLayer?
     public var videoURL: URL?
     private var editedVideoURL: URL?
@@ -63,6 +64,8 @@ class PreviewViewController: UIViewController {
         statusLabel.isHidden = true
         downloadButton.isHidden = true
         downloadButton.isEnabled = false
+        
+        hintLabel.text = "Scroll down to go back"
 
         // Do any additional setup after loading the view.
     }
@@ -139,7 +142,7 @@ class PreviewViewController: UIViewController {
         self.uploadButton.isHidden = true
         self.uploadButton.isEnabled = true
         self.statusLabel.isHidden = false
-        self.statusLabel.isEnabled = false
+        self.statusLabel.isEnabled = true
         self.statusLabel.text = "Uploading"
         self.statusLabel.frame = CGRect(x: screenSize.width/2 - 50, y: screenSize.height/2 - 50, width: 100, height: 100)
         
@@ -201,6 +204,13 @@ class PreviewViewController: UIViewController {
                                                                 let responseString = String(data: responseData, encoding: String.Encoding.utf8) {
                                                                 print("Server Response:")
                                                                 print(responseString)
+                                                                
+
+                                                                // Get video edit status
+                                                                DispatchQueue.main.async {
+                                                                    self.statusLabel.text = "Processing"
+                                                                    self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.GetEditStatus), userInfo: nil, repeats: true)
+                                                                }
                                                             }
 
                                                             // Do something with the error
@@ -210,11 +220,6 @@ class PreviewViewController: UIViewController {
             })
 
             uploadTask.resume()
-        }
-
-        // Get video edit status
-        DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.GetEditStatus), userInfo: nil, repeats: true)
         }
         
     }
@@ -374,6 +379,15 @@ class PreviewViewController: UIViewController {
 //            }
 //        }
 //        )
+        
+        DispatchQueue.main.async {
+            self.spinnerView = SpinnerView(frame: CGRect(x: self.screenSize.width/2 - 50, y: self.screenSize.height/2 - 50, width: 100, height: 100))
+            self.view.addSubview(self.spinnerView!)
+            self.statusLabel.isHidden = false
+            self.statusLabel.isEnabled = true
+            self.statusLabel.text = "Downloading"
+        }
+        
         print("Download")
         DispatchQueue.global(qos: .background).async {
             if let url = URL(string: self.databaseURL + "user/result/" + self.videoName),
@@ -387,6 +401,20 @@ class PreviewViewController: UIViewController {
                     }) { completed, error in
                         if completed {
                             print("Video is saved!")
+                            
+                            DispatchQueue.main.async {
+                                for view in self.view.subviews {
+                                    if(view is SpinnerView)
+                                    {
+                                        view.removeFromSuperview()
+                                    }
+                                }
+                                
+                                self.statusLabel.isHidden = true
+                                self.statusLabel.isEnabled = false
+                                
+                                self.hintLabel.text = "Downloaded"
+                            }
                         }
                         
                         if (error != nil) {
