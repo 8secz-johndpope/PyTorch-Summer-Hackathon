@@ -99,6 +99,17 @@ class PreviewViewController: UIViewController {
         
         // Set orientation
         AppUtility.lockOrientation(.all)
+        
+        DispatchQueue.main.async {
+            for layer in self.previewView!.layer.sublayers! {
+                if(layer is AVPlayerLayer)
+                {
+                    let _layer = layer as! AVPlayerLayer
+                    _layer.player?.pause()
+                    layer.removeFromSuperlayer()
+                }
+            }
+        }
     }
     
     func cleanup(outputFileURL: URL) {
@@ -257,6 +268,17 @@ class PreviewViewController: UIViewController {
                                                                             if(view is SpinnerView)
                                                                             {
                                                                                 view.removeFromSuperview()
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    DispatchQueue.main.async {
+                                                                        for layer in self.previewView!.layer.sublayers! {
+                                                                            if(layer is AVPlayerLayer)
+                                                                            {
+                                                                                let _layer = layer as! AVPlayerLayer
+                                                                                _layer.player?.pause()
+                                                                                layer.removeFromSuperlayer()
                                                                             }
                                                                         }
                                                                     }
