@@ -29,6 +29,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 //        recordButton.imageView?.contentMode = .scaleAspectFit
 //        recordButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
+        // Set size
+//        self.previewView.frame.size.height = self.view.frame.height - 250
+//        self.previewView.frame.size.width = self.view.frame.width
+//        print(self.view.frame.height)
+//        print(self.previewView.frame.size.height)
+        
+        
         // Disable the UI. Enable the UI later, if and only if the session starts running.
         cameraButton.isEnabled = false
         recordButton.isEnabled = false

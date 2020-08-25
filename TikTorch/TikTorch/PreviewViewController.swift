@@ -47,6 +47,7 @@ class PreviewViewController: UIViewController {
     @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var hintLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
     var playerLayer: AVPlayerLayer?
     public var videoURL: URL?
     private var editedVideoURL: URL?
@@ -55,6 +56,10 @@ class PreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set size
+//        self.previewView.frame.size.height = self.view.frame.height - 200
+//        self.previewView.frame.size.width = self.view.frame.width
         
         // Change button style
         uploadButton.layer.cornerRadius = 14
