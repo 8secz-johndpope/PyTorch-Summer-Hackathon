@@ -117,7 +117,7 @@ class PreviewViewController: UIViewController {
     
     // Upload video to database
     private let videoName = NSUUID().uuidString + ".mp4"
-    private let databaseURL = "https://6448b5fb844b.ngrok.io/videos/"
+    private let databaseURL = "https://tiktorch.ngrok.io/videos/"
     
     @IBAction func uploadVideo(_ sender: UIButton) {
         self.videoProcessStatus = .uploading
