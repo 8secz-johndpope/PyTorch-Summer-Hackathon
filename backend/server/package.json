@@ -1,0 +1,32 @@
+{
+  "name": "hackthon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "uploadVideoTest": "node axiosTest",
+    "commandCallTest": "node commandTest",
+    "frameSplitTest": "node frameTest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "archiver": "^5.0.0",
+    "async": "^3.2.0",
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "child_process": "^1.0.2",
+    "concat-stream": "^2.0.0",
+    "express": "^4.17.1",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-extract-frames": "^2.0.2",
+    "form-data": "^3.0.0",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.10.0",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7"
+  }
+}
