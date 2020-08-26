@@ -1,8 +1,5 @@
 # PyTorch Summer Hackathon
 
-[![hackmd-github-sync-badge](https://hackmd.io/7fFMIqUmQnmktgAkk_rInA/badge)](https://hackmd.io/7fFMIqUmQnmktgAkk_rInA)
-
-
 ## Frontend
 
 ### Device
