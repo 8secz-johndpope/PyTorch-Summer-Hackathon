@@ -1,5 +1,8 @@
 # PyTorch Summer Hackathon
 
+[![hackmd-github-sync-badge](https://hackmd.io/7fFMIqUmQnmktgAkk_rInA/badge)](https://hackmd.io/7fFMIqUmQnmktgAkk_rInA)
+
+
 ## Frontend
 
 ### Device
@@ -227,9 +230,6 @@ Store:
 Store video to the folder named with the factors including user name and UUID to the local server.
 Request:
 Get video by the factors including user name and UUID from the local server.
-
-`Domain`
-Need to deploy api to a server with a static domain.
 
 ### Backend
 ---
