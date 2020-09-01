@@ -1,5 +1,7 @@
 # PyTorch Summer Hackathon
 
+![](https://github.com/h-tamader-team/PyTorch-Summer-Hackathon/blob/master/logo.png)
+
 ## Frontend
 
 ### Device
@@ -228,8 +230,22 @@ Store video to the folder named with the factors including user name and UUID to
 Request:
 Get video by the factors including user name and UUID from the local server.
 
-### Backend
+## Backend
 ---
+![](https://github.com/h-tamader-team/PyTorch-Summer-Hackathon/blob/master/system.png)
 
-### Model
----
+### Ngrok and Node.js
+1. Handle requests and store videos sent from the frontend
+2. Create new record of UserID and video path to mongodb
+3. Trigger the video prediction and comparison program to generate result videos
+4. Notify users of the video status and return the video
+
+### Posenet
+The source code originates from the repo: **https://github.com/rwightman/posenet-pytorch** and there is no modification to their scripts. Only additional scripts were wrote for calculating similarity of detected keypoints and for editting videos.
+
+### Similarity of poses
+The following steps show how to calculate the similarity between two different series of points:
+1. <font color="#6b6ce6">Detect keypoints of a person in two different videos. (if there are more than one person, only the one with the biggest bounding box will be recorded)</font>
+2. <font color="#6b6ce6">Resize the two series of keypoints into the same size through the key of their height of bounding boxes.</font>
+3. <font color="#6b6ce6">Calculate the cosine distance between each of their keypoints as the representatino of the similarity.</font>
+4. <font color="#6b6ce6">The result having the shortest distance, their corresponding frame to the source video will be used as a time key to edit these the fragment of these two videos.</font>
