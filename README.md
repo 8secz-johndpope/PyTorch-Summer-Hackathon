@@ -1,5 +1,7 @@
 # PyTorch Summer Hackathon
 
+###### tags: `TryTech`
+
 ![](https://github.com/h-tamader-team/PyTorch-Summer-Hackathon/blob/master/logo.png)
 
 ## Frontend
